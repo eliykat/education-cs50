@@ -24,7 +24,6 @@ int main(int argc, string argv[])
     for (int i = 0; i < key_len; i++)
     {
         //check i'th char of string key is alpha
-
         if (isalpha(argv[1][i]))
         {
             key[i] = toupper(argv[1][i]) - 'A';
@@ -51,27 +50,11 @@ int main(int argc, string argv[])
             //check the i'th char is upper
             if (isupper(plaintext[i]))
             {
-
-                //check whether adding the key will run past Z
-                if (plaintext[i] + key[j] > 'Z')
-                {
-                    printf("%c", 64 + (key[j] - ('Z' - plaintext[i])) );
-                }
-                else
-                {
-                    printf("%c", plaintext[i] + key[j]);
-                }
+                printf("%c", ((plaintext[i] - 'A' + key[j]) % ALPHABET_SIZE) + 'A');
             }
-            else //i'th char is lower
+            else
             {
-                if (plaintext[i] + key[j] > 'z')
-                {
-                    printf("%c", 96 + (key[j] - ('z' - plaintext[i])) );
-                }
-                else
-                {
-                    printf("%c", plaintext[i] + key[j]);
-                }
+                printf("%c", ((plaintext[i] - 'a' + key[j]) % ALPHABET_SIZE) + 'a');
             }
 
             //check whether incrementing j would exceed the bounds of the key array
@@ -84,15 +67,11 @@ int main(int argc, string argv[])
             {
                 j++;
             }
-
         }
         else //i'th char is not a letter, just reprint it
         {
             printf("%c", plaintext[i]);
         }
-
     }
-
     printf("\n");
-
 }
