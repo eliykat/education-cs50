@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <cs50.h>
 #include <string.h>
+#include <ctype.h>
 
 int main(void)
 {
@@ -9,28 +10,14 @@ int main(void)
     string name = get_string();
     printf("\n");
 
-    //Get the length of the string
-    int name_length = strlen(name);
-
     //Iterate through the name string
-    for (int i = 0; i < name_length; i++)
+    for (int i = 0, len = strlen(name); i < len; i++)
     {
-        //test that the current space is not blank AND the previous space was blank (or we're at the start of the word) - because this indicates the start of a word
-
+        //check we are at the start of a word - indicated by the last char being a space (but not this one), or by i == 1
         if (name[i] != ' ' && (name[i-1] == ' ' || i == 0))
         {
-
-            if (name[i] > 'a' && name[i] < 'z')
-            {
-                printf("%c", name[i] - 32);
-            }
-            else
-            {
-                printf("%c", name[i]);
-            }
-
+            printf("%c", toupper(name[i]));
         }
-
     }
 
     printf("\n");
