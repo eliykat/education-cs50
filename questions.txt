@@ -1,0 +1,20 @@
+0.  A 46 character string (plus null terminating character), being the largest possible word we might find.
+1.  Returns resource usage of a program or particular threads of a program.
+2.  16
+3.  Becuase the syntax of rusage requires a pointer to a struct to store the contents in.
+4.
+
+Initial for loop iterates over each character in the text until it reaches EOF character.
+	Then check to confirm that the char is a letter (using isalpha) or an apostrophe (as abbreviated words are permitted by the program)
+		If so, add it to the word array of chars (effectively a string) and increment index by 1, so that next time we write to the next element.
+			Then check whether our index has exceeded the maximum permitted length.  If so, then read the rest of the word but throw it away and reset index to 0.
+	Else if, check if it is a number.  If so, read and throw away the rest of the word and reset index for a new word.
+	If it's none of the above (i.e. neither a letter, apostrophe, or number), and index is greater than 0, then we must have read a whole word and hit the newline character.
+		Null-terminate the current word string
+		Count one more word as having being read
+		Call the misspelled function, passing the word by reference for checking
+		If it is misspelled, add it to the counter of misspelled words
+		Reset index to 0 for a new word
+
+5.  Using fscanf doesn't let us check each character to make sure it conforms to our requirements (i.e. only letters and apostrophe)
+6.  Declaring it as a const prevents us from accidentally overwriting the pointer to the word to be checked, thereby losing it. (Rather than copying the pointer address to a new pointer and then working with that.)
