@@ -1,0 +1,45 @@
+#!/usr/bin/env python3
+
+import sys
+import os
+
+from helpers import get_user_timeline
+from analyzer import Analyzer
+from termcolor import colored
+
+def main(screen_name):
+
+    #Source: smile script
+
+    #ensure proper usage
+    if len(sys.argv) != 2:
+        sys.ext("Usage: ./tweets @screen_name")
+
+    # absolute paths to lists
+    positives = os.path.join(sys.path[0], "positive-words.txt")
+    negatives = os.path.join(sys.path[0], "negative-words.txt")
+
+    # instantiate analyzer
+    analyzer = Analyzer(positives, negatives)
+
+    tweets = get_user_timeline(screen_name, 50)
+
+    for t in tweets:
+
+        score = analyzer.analyze(t)
+
+        #Set color based on score. Also add extra indent if not a negative, so we get nice alignment
+        if score > 0.0:
+            color = "green"
+            indent = " "
+        elif score < 0.0:
+            color = "red"
+            indent = ""
+        else:
+            color = "yellow"
+            indent = " "
+
+        print(colored(indent + str(score) + " " + t, color))
+
+if __name__ == "__main__":
+    main(sys.argv[1])
